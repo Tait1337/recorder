@@ -13,5 +13,4 @@ jobs:
       - uses: actions/setup-java@v1
         with:
           java-version: 11
-      - run: chmod +x gradlew
       - run: mvn -B package --file pom.xml
