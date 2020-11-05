@@ -49,9 +49,8 @@ java -Dffmpeg.home="/path/to/ffmpeg/bin" -Dffmpeg.audio.input.device="Stereomix 
 
 You can do configurations with [application.properties](src/main/resources/application.properties) or via java command line parameter -D
 
-Download and extract the latest FFmpeg distribution. Please use the GPL licensed version which comes with libx264 encoder.
+[Download](https://ffmpeg.org/download.html) and extract the latest FFmpeg release. Please use the GPL licensed version which comes with libx264 encoder.
 ```
-https://ffmpeg.org/download.html
 /path/to/ffmpeg/bin/ffmpeg -version
 ```
 
