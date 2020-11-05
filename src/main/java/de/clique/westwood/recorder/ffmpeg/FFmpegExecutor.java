@@ -63,7 +63,12 @@ public abstract class FFmpegExecutor {
 
     private static void execCommandline(String cmd) throws IOException {
         LOGGER.info("Execute command: " + ffmpegHome + File.separator + cmd);
-        ProcessBuilder builder = new ProcessBuilder("cmd.exe", "/c", ffmpegHome + File.separator + cmd);
+        ProcessBuilder builder;
+        if (System.getProperty("os.name").startsWith("Windows")){
+            builder = new ProcessBuilder("cmd.exe", "/c", ffmpegHome + File.separator + cmd);
+        }else{
+            builder = new ProcessBuilder("/bin/bash", "-c", ffmpegHome + File.separator + cmd);
+        }
         builder.redirectErrorStream(true);
         ffmpegProcess = builder.start();
 
