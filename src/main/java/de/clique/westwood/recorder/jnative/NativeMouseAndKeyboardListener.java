@@ -14,7 +14,7 @@ import java.util.List;
  */
 public class NativeMouseAndKeyboardListener implements NativeKeyListener, NativeMouseInputListener {
 
-    private List<MouseAndKeyboardEvents> recording;
+    private final List<MouseAndKeyboardEvents> recording;
     private long lastKeyboardAction;
     private long lastMouseAction;
 

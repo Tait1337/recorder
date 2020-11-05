@@ -19,12 +19,12 @@ import java.util.logging.Logger;
  */
 public class Recorder {
 
-    private static Logger LOGGER = Logger.getLogger(Recorder.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(Recorder.class.getName());
 
     private File outputFile;
     private boolean recordKeyboardAndMouse;
     private boolean recordScreen;
-    private NativeMouseAndKeyboardListener mouseAndKeyboardListener;
+    private final NativeMouseAndKeyboardListener mouseAndKeyboardListener;
 
     public Recorder() {
         this.mouseAndKeyboardListener = new NativeMouseAndKeyboardListener();

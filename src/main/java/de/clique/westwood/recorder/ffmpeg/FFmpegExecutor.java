@@ -10,7 +10,7 @@ import java.util.logging.Logger;
  */
 public abstract class FFmpegExecutor {
 
-    private static Logger LOGGER = Logger.getLogger(FFmpegExecutor.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(FFmpegExecutor.class.getName());
 
     private static final String ffmpegHome = PropertyReader.getProperty("ffmpeg.home");
     private static final String audioInputDevice = PropertyReader.getProperty("ffmpeg.audio.input.device");

@@ -16,7 +16,7 @@ import java.util.logging.Logger;
  */
 public class ScreenRecorderUI extends JFrame {
 
-    private static Logger LOGGER = Logger.getLogger(ScreenRecorderUI.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(ScreenRecorderUI.class.getName());
 
     public ScreenRecorderUI() {
         Recorder recorder = new Recorder();

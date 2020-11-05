@@ -11,9 +11,9 @@ import java.util.logging.Logger;
  */
 public class RecorderApplication {
 
-    private static Logger LOGGER = Logger.getLogger(Recorder.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(Recorder.class.getName());
 
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         loadLoggingSettings();
         new ScreenRecorderUI();
     }

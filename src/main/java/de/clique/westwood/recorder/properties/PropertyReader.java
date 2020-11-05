@@ -9,7 +9,7 @@ import java.util.logging.Logger;
  */
 public abstract class PropertyReader {
 
-    private static Logger LOGGER = Logger.getLogger(PropertyReader.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(PropertyReader.class.getName());
 
     private static Properties properties;
     static {

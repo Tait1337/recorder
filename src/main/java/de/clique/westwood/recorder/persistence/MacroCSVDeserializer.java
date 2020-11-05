@@ -26,7 +26,7 @@ public abstract class MacroCSVDeserializer {
         for (String line : lines.split("\n")) {
             String[] lineElements = line.split(";");
             String className = lineElements[0];
-            long delay = Long.valueOf(lineElements[1]);
+            long delay = Long.parseLong(lineElements[1]);
             if (className.equals(KeyPressedEvent.class.getName())) {
                 int keycode = Integer.parseInt(lineElements[2]);
                 KeyPressedEvent event = new KeyPressedEvent(delay, keycode);
