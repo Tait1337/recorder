@@ -7,11 +7,14 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.StandardOpenOption;
 import java.util.List;
+import java.util.logging.Logger;
 
 /**
  * Serializer for .macro files
  */
 public abstract class MacroCSVSerializer {
+
+    private static final Logger LOGGER = Logger.getLogger(MacroCSVSerializer.class.getName());
 
     /**
      * Save the recording to file
@@ -21,31 +24,36 @@ public abstract class MacroCSVSerializer {
      */
     public static void serialize(File output, List<MouseAndKeyboardEvents> recording) throws IOException {
         if (output.exists()){
-            output.delete();
-        }
-        output.createNewFile();
-        for (MouseAndKeyboardEvents genericEvent : recording) {
-            String line = "";
-            line+= genericEvent.getClass().getName() + ";";
-            line+= genericEvent.getDelay() + ";";
-            if (genericEvent instanceof KeyPressedEvent) {
-                KeyPressedEvent event = (KeyPressedEvent) genericEvent;
-                line+= event.getKeyCode() + ";";
-            } else if (genericEvent instanceof KeyReleasedEvent) {
-                KeyReleasedEvent event = (KeyReleasedEvent) genericEvent;
-                line+= event.getKeyCode() + ";";
-            } else if (genericEvent instanceof MouseMovedEvent) {
-                MouseMovedEvent event = (MouseMovedEvent) genericEvent;
-                line+= event.getX() + ";" + event.getY() + ";";
-            } else if (genericEvent instanceof MousePressedEvent) {
-                MousePressedEvent event = (MousePressedEvent) genericEvent;
-                line+= event.getButtoncode() + ";";
-            } else if (genericEvent instanceof MouseReleasedEvent) {
-                MouseReleasedEvent event = (MouseReleasedEvent) genericEvent;
-                line+= event.getButtoncode() + ";";
+            if (!output.delete()){
+                LOGGER.warning("Could not delete file: " + output.getAbsolutePath());
             }
-            line+="\n";
-            Files.writeString(output.toPath(), line, StandardOpenOption.APPEND);
+        }
+        if (output.createNewFile()) {
+            for (MouseAndKeyboardEvents genericEvent : recording) {
+                String line = "";
+                line += genericEvent.getClass().getName() + ";";
+                line += genericEvent.getDelay() + ";";
+                if (genericEvent instanceof KeyPressedEvent) {
+                    KeyPressedEvent event = (KeyPressedEvent) genericEvent;
+                    line += event.getKeyCode() + ";";
+                } else if (genericEvent instanceof KeyReleasedEvent) {
+                    KeyReleasedEvent event = (KeyReleasedEvent) genericEvent;
+                    line += event.getKeyCode() + ";";
+                } else if (genericEvent instanceof MouseMovedEvent) {
+                    MouseMovedEvent event = (MouseMovedEvent) genericEvent;
+                    line += event.getX() + ";" + event.getY() + ";";
+                } else if (genericEvent instanceof MousePressedEvent) {
+                    MousePressedEvent event = (MousePressedEvent) genericEvent;
+                    line += event.getButtoncode() + ";";
+                } else if (genericEvent instanceof MouseReleasedEvent) {
+                    MouseReleasedEvent event = (MouseReleasedEvent) genericEvent;
+                    line += event.getButtoncode() + ";";
+                }
+                line += "\n";
+                Files.writeString(output.toPath(), line, StandardOpenOption.APPEND);
+            }
+        } else {
+            LOGGER.warning("Could not create file: " + output.getAbsolutePath());
         }
     }
 

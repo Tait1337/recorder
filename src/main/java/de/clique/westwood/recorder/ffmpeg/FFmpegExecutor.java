@@ -41,6 +41,7 @@ public abstract class FFmpegExecutor {
             ffmpegProcess.waitFor();
         } catch (InterruptedException e) {
             LOGGER.warning("FFmpeg process interrupted: " + e.toString());
+            Thread.currentThread().interrupt();
         } catch (IOException e) {
             LOGGER.warning("Cant send keyboard commands to FFmpeg process: " + e.toString());
         }
@@ -58,6 +59,7 @@ public abstract class FFmpegExecutor {
             ffmpegProcess.waitFor();
         } catch (InterruptedException e) {
             LOGGER.warning("FFmpeg process interrupted: " + e.toString());
+            Thread.currentThread().interrupt();
         }
     }
 

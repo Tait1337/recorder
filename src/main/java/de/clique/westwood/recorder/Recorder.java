@@ -97,43 +97,45 @@ public class Recorder {
             FFmpegExecutor.startScreenRecording(mp4File);
         }
 
-        Robot robot = null;
         try {
-            robot = new Robot();
+            Robot robot = new Robot();
+            for (MouseAndKeyboardEvents genericEvent : recording) {
+                try {
+                    Thread.sleep(genericEvent.getDelay());
+                } catch (InterruptedException e) {
+                    LOGGER.warning("Thread was interrupted: " + e.toString());
+                    Thread.currentThread().interrupt();
+                }
+                if (genericEvent instanceof KeyPressedEvent) {
+                    KeyPressedEvent event = (KeyPressedEvent) genericEvent;
+                    robot.keyPress(event.getKeyCode());
+                } else if (genericEvent instanceof KeyReleasedEvent) {
+                    KeyReleasedEvent event = (KeyReleasedEvent) genericEvent;
+                    robot.keyRelease(event.getKeyCode());
+                } else if (genericEvent instanceof MouseMovedEvent) {
+                    MouseMovedEvent event = (MouseMovedEvent) genericEvent;
+                    robot.mouseMove(event.getX(), event.getY());
+                } else if (genericEvent instanceof MousePressedEvent) {
+                    MousePressedEvent event = (MousePressedEvent) genericEvent;
+                    robot.mousePress(event.getButtoncode());
+                } else if (genericEvent instanceof MouseReleasedEvent) {
+                    MouseReleasedEvent event = (MouseReleasedEvent) genericEvent;
+                    robot.mouseRelease(event.getButtoncode());
+                }
+            }
+            if (recordScreenAsMP4 || recordScreenAsGIFSelected) {
+                FFmpegExecutor.stopScreenRecording();
+            }
+            if (recordScreenAsGIFSelected) {
+                FFmpegExecutor.convertMp4ToGif(mp4File, gifFile);
+                if (!recordScreenAsMP4) {
+                    if (!mp4File.delete()){
+                        LOGGER.warning("File could not be deleted: " + mp4File.getAbsolutePath());
+                    }
+                }
+            }
         } catch (AWTException e) {
-            new RuntimeException(e);
-        }
-        for (MouseAndKeyboardEvents genericEvent : recording) {
-            try {
-                Thread.sleep(genericEvent.getDelay());
-            } catch (InterruptedException e) {
-                LOGGER.warning("Thread was interrupted: " + e.toString());
-            }
-            if (genericEvent instanceof KeyPressedEvent) {
-                KeyPressedEvent event = (KeyPressedEvent) genericEvent;
-                robot.keyPress(event.getKeyCode());
-            } else if (genericEvent instanceof KeyReleasedEvent) {
-                KeyReleasedEvent event = (KeyReleasedEvent) genericEvent;
-                robot.keyRelease(event.getKeyCode());
-            } else if (genericEvent instanceof MouseMovedEvent) {
-                MouseMovedEvent event = (MouseMovedEvent) genericEvent;
-                robot.mouseMove(event.getX(), event.getY());
-            } else if (genericEvent instanceof MousePressedEvent) {
-                MousePressedEvent event = (MousePressedEvent) genericEvent;
-                robot.mousePress(event.getButtoncode());
-            } else if (genericEvent instanceof MouseReleasedEvent) {
-                MouseReleasedEvent event = (MouseReleasedEvent) genericEvent;
-                robot.mouseRelease(event.getButtoncode());
-            }
-        }
-        if (recordScreenAsMP4 || recordScreenAsGIFSelected) {
-            FFmpegExecutor.stopScreenRecording();
-        }
-        if (recordScreenAsGIFSelected) {
-            FFmpegExecutor.convertMp4ToGif(mp4File, gifFile);
-            if (!recordScreenAsMP4) {
-                mp4File.delete();
-            }
+            throw new RuntimeException(e);
         }
     }
 
