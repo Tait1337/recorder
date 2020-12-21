@@ -17,6 +17,7 @@ import java.util.logging.Logger;
 public class ScreenRecorderUI extends JFrame {
 
     private static final Logger LOGGER = Logger.getLogger(ScreenRecorderUI.class.getName());
+    private static final String START_RECORDING_TEXT = "Start Recording";
 
     public ScreenRecorderUI() {
         Recorder recorder = new Recorder();
@@ -76,9 +77,9 @@ public class ScreenRecorderUI extends JFrame {
         c.gridy = 2;
         recordingPanel.add(recordScreenCheckBox, c);
 
-        recordingButton.setText("Start Recording");
+        recordingButton.setText(START_RECORDING_TEXT);
         recordingButton.addActionListener(evt -> {
-            if (evt.getActionCommand().equals("Start Recording")){
+            if (evt.getActionCommand().equals(START_RECORDING_TEXT)){
                 try {
                     if (!recordMouseAndKeyboardCheckBox.isSelected() && !recordScreenCheckBox.isSelected()){
                         JOptionPane.showMessageDialog(this, "You need to choose at least one of the recording options", "Missing recording option", JOptionPane.ERROR_MESSAGE);
@@ -108,7 +109,7 @@ public class ScreenRecorderUI extends JFrame {
                     replayRecordingButton.setEnabled(true);
                     recordScreenAsMP4.setEnabled(true);
                     recordScreenAsGIF.setEnabled(true);
-                    recordingButton.setText("Start Recording");
+                    recordingButton.setText(START_RECORDING_TEXT);
                     loggingTextArea.append("\nRecording finished.");
                     recorder.stopRecording();
                 } catch (Exception e) {

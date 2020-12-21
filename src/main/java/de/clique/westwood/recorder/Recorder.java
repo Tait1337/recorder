@@ -40,20 +40,17 @@ public class Recorder {
      * @param recordScreen           <code>true</code> to active screen recording
      * @param outputFile             the target file to store the recording
      * @throws IOException if the recording could not be saved into filesystem
+     * @throws NativeHookException if mouse and keyboard recording hook could not be established
      */
-    public void startRecording(boolean recordKeyboardAndMouse, boolean recordScreen, File outputFile) throws IOException {
+    public void startRecording(boolean recordKeyboardAndMouse, boolean recordScreen, File outputFile) throws IOException, NativeHookException {
         this.outputFile = outputFile;
         this.recordKeyboardAndMouse = recordKeyboardAndMouse;
         this.recordScreen = recordScreen;
         if (this.recordKeyboardAndMouse) {
-            try {
-                GlobalScreen.registerNativeHook();
-                GlobalScreen.addNativeKeyListener(mouseAndKeyboardListener);
-                GlobalScreen.addNativeMouseListener(mouseAndKeyboardListener);
-                GlobalScreen.addNativeMouseMotionListener(mouseAndKeyboardListener);
-            } catch (NativeHookException e) {
-                throw new RuntimeException(e);
-            }
+            GlobalScreen.registerNativeHook();
+            GlobalScreen.addNativeKeyListener(mouseAndKeyboardListener);
+            GlobalScreen.addNativeMouseListener(mouseAndKeyboardListener);
+            GlobalScreen.addNativeMouseMotionListener(mouseAndKeyboardListener);
         }
         if (this.recordScreen) {
             FFmpegExecutor.startScreenRecording(new File(outputFile.getAbsolutePath() + ".mp4"));
@@ -64,20 +61,17 @@ public class Recorder {
      * Stop a running Recording
      *
      * @throws IOException if the recording could not be saved into filesystem
+     * @throws NativeHookException if mouse and keyboard recording hook could not be established
      */
-    public void stopRecording() throws IOException {
+    public void stopRecording() throws IOException, NativeHookException {
         if (recordScreen) {
             FFmpegExecutor.stopScreenRecording();
         }
         if (recordKeyboardAndMouse) {
-            try {
-                GlobalScreen.removeNativeKeyListener(mouseAndKeyboardListener);
-                GlobalScreen.removeNativeMouseListener(mouseAndKeyboardListener);
-                GlobalScreen.removeNativeMouseMotionListener(mouseAndKeyboardListener);
-                GlobalScreen.unregisterNativeHook();
-            } catch (NativeHookException e) {
-                throw new RuntimeException(e);
-            }
+            GlobalScreen.removeNativeKeyListener(mouseAndKeyboardListener);
+            GlobalScreen.removeNativeMouseListener(mouseAndKeyboardListener);
+            GlobalScreen.removeNativeMouseMotionListener(mouseAndKeyboardListener);
+            GlobalScreen.unregisterNativeHook();
             MacroCSVSerializer.serialize(new File(outputFile.getAbsolutePath() + ".macro"), mouseAndKeyboardListener.getRecording());
         }
     }

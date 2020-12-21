@@ -13,6 +13,12 @@ import static org.jnativehook.keyboard.NativeKeyEvent.*;
 public abstract class NativeCodeToJavaCodeConverter {
 
     /**
+     * Private Constructor
+     */
+    private NativeCodeToJavaCodeConverter() {
+    }
+
+    /**
      * Get the java mouse button code for the native mouse button code
      *
      * @param nativeCode the native button code
