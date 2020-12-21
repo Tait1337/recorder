@@ -14,6 +14,12 @@ import java.util.List;
 public abstract class MacroCSVDeserializer {
 
     /**
+     * Private Constructor
+     */
+    private MacroCSVDeserializer() {
+    }
+
+    /**
      * Read the recording from file
      *
      * @param input the source .macro file

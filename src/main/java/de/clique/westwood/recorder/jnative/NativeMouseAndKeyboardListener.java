@@ -55,6 +55,7 @@ public class NativeMouseAndKeyboardListener implements NativeKeyListener, Native
 
     @Override
     public void nativeKeyTyped(NativeKeyEvent nativeKeyEvent) {
+        // nwe use pressed and released instead of typed event
     }
 
     @Override
@@ -81,6 +82,7 @@ public class NativeMouseAndKeyboardListener implements NativeKeyListener, Native
 
     @Override
     public void nativeMouseClicked(NativeMouseEvent nativeMouseEvent) {
+        // nwe use pressed and released instead of typed event
     }
 
     @Override
@@ -118,5 +120,6 @@ public class NativeMouseAndKeyboardListener implements NativeKeyListener, Native
 
     @Override
     public void nativeMouseDragged(NativeMouseEvent nativeMouseEvent) {
+        // nwe use pressed and released instead of dragged event
     }
 }

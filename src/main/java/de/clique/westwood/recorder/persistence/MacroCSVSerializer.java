@@ -17,6 +17,12 @@ public abstract class MacroCSVSerializer {
     private static final Logger LOGGER = Logger.getLogger(MacroCSVSerializer.class.getName());
 
     /**
+     * Private Constructor
+     */
+    private MacroCSVSerializer() {
+    }
+
+    /**
      * Save the recording to file
      * @param output the target .macro file (will be overwritten if exists)
      * @param recording the recording
@@ -24,9 +30,7 @@ public abstract class MacroCSVSerializer {
      */
     public static void serialize(File output, List<MouseAndKeyboardEvents> recording) throws IOException {
         if (output.exists()){
-            if (!output.delete()){
-                LOGGER.warning("Could not delete file: " + output.getAbsolutePath());
-            }
+            Files.deleteIfExists(output.toPath());
         }
         if (output.createNewFile()) {
             for (MouseAndKeyboardEvents genericEvent : recording) {

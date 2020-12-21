@@ -136,7 +136,7 @@ public class ScreenRecorderUI extends JFrame {
                     protected Object doInBackground() {
                         try {
                             recorder.playbackRecording(recordScreenAsMP4.isSelected(), recordScreenAsGIF.isSelected(), fileChooser.getSelectedFile());
-                        } catch (IOException e) {
+                        } catch (IOException | AWTException e) {
                             LOGGER.severe("Error while Playback: " + e.toString());
                         }
                         return null;

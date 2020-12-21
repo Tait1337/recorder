@@ -22,6 +22,12 @@ public abstract class PropertyReader {
     }
 
     /**
+     * Private Constructor
+     */
+    private PropertyReader() {
+    }
+
+    /**
      * Read the property value
      *
      * @param key the property key

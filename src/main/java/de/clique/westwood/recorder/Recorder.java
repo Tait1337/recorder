@@ -11,6 +11,7 @@ import org.jnativehook.NativeHookException;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -88,8 +89,9 @@ public class Recorder {
      * @param recordScreenAsGIFSelected <code>true</code> to active gif screen recording
      * @param source                    the recording file that contains the keyboard and mouse events recording
      * @throws IOException if the recording could not be read from filesystem
+     * @throws AWTException if Robot class could not be found
      */
-    public void playbackRecording(boolean recordScreenAsMP4, boolean recordScreenAsGIFSelected, File source) throws IOException {
+    public void playbackRecording(boolean recordScreenAsMP4, boolean recordScreenAsGIFSelected, File source) throws IOException, AWTException {
         List<MouseAndKeyboardEvents> recording = MacroCSVDeserializer.loadFromFile(source);
         File mp4File = new File(source.getAbsolutePath() + "-playback_" + System.currentTimeMillis() + ".mp4");
         File gifFile = new File(mp4File.getAbsolutePath().substring(0, mp4File.getAbsolutePath().length() - 3) + "gif");
@@ -97,45 +99,39 @@ public class Recorder {
             FFmpegExecutor.startScreenRecording(mp4File);
         }
 
-        try {
-            Robot robot = new Robot();
-            for (MouseAndKeyboardEvents genericEvent : recording) {
-                try {
-                    Thread.sleep(genericEvent.getDelay());
-                } catch (InterruptedException e) {
-                    LOGGER.warning("Thread was interrupted: " + e.toString());
-                    Thread.currentThread().interrupt();
-                }
-                if (genericEvent instanceof KeyPressedEvent) {
-                    KeyPressedEvent event = (KeyPressedEvent) genericEvent;
-                    robot.keyPress(event.getKeyCode());
-                } else if (genericEvent instanceof KeyReleasedEvent) {
-                    KeyReleasedEvent event = (KeyReleasedEvent) genericEvent;
-                    robot.keyRelease(event.getKeyCode());
-                } else if (genericEvent instanceof MouseMovedEvent) {
-                    MouseMovedEvent event = (MouseMovedEvent) genericEvent;
-                    robot.mouseMove(event.getX(), event.getY());
-                } else if (genericEvent instanceof MousePressedEvent) {
-                    MousePressedEvent event = (MousePressedEvent) genericEvent;
-                    robot.mousePress(event.getButtoncode());
-                } else if (genericEvent instanceof MouseReleasedEvent) {
-                    MouseReleasedEvent event = (MouseReleasedEvent) genericEvent;
-                    robot.mouseRelease(event.getButtoncode());
-                }
+        Robot robot = new Robot();
+        for (MouseAndKeyboardEvents genericEvent : recording) {
+            try {
+                Thread.sleep(genericEvent.getDelay());
+            } catch (InterruptedException e) {
+                LOGGER.warning("Thread was interrupted: " + e.toString());
+                Thread.currentThread().interrupt();
             }
-            if (recordScreenAsMP4 || recordScreenAsGIFSelected) {
-                FFmpegExecutor.stopScreenRecording();
+            if (genericEvent instanceof KeyPressedEvent) {
+                KeyPressedEvent event = (KeyPressedEvent) genericEvent;
+                robot.keyPress(event.getKeyCode());
+            } else if (genericEvent instanceof KeyReleasedEvent) {
+                KeyReleasedEvent event = (KeyReleasedEvent) genericEvent;
+                robot.keyRelease(event.getKeyCode());
+            } else if (genericEvent instanceof MouseMovedEvent) {
+                MouseMovedEvent event = (MouseMovedEvent) genericEvent;
+                robot.mouseMove(event.getX(), event.getY());
+            } else if (genericEvent instanceof MousePressedEvent) {
+                MousePressedEvent event = (MousePressedEvent) genericEvent;
+                robot.mousePress(event.getButtoncode());
+            } else if (genericEvent instanceof MouseReleasedEvent) {
+                MouseReleasedEvent event = (MouseReleasedEvent) genericEvent;
+                robot.mouseRelease(event.getButtoncode());
             }
-            if (recordScreenAsGIFSelected) {
-                FFmpegExecutor.convertMp4ToGif(mp4File, gifFile);
-                if (!recordScreenAsMP4) {
-                    if (!mp4File.delete()){
-                        LOGGER.warning("File could not be deleted: " + mp4File.getAbsolutePath());
-                    }
-                }
+        }
+        if (recordScreenAsMP4 || recordScreenAsGIFSelected) {
+            FFmpegExecutor.stopScreenRecording();
+        }
+        if (recordScreenAsGIFSelected) {
+            FFmpegExecutor.convertMp4ToGif(mp4File, gifFile);
+            if (!recordScreenAsMP4) {
+                Files.deleteIfExists(mp4File.toPath());
             }
-        } catch (AWTException e) {
-            throw new RuntimeException(e);
         }
     }
 

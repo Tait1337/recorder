@@ -13,7 +13,7 @@ import java.util.logging.Logger;
 public class RecorderApplication {
 
     private static final String LOG_CONFIG_FILE = "logging.properties";
-    private static final Logger LOGGER = Logger.getLogger(Recorder.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(RecorderApplication.class.getName());
 
     public static void main(String[] args) {
         loadLoggingSettings();

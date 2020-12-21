@@ -1,5 +1,6 @@
 package de.clique.westwood.recorder.jnative;
 
+import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
@@ -9,6 +10,12 @@ import java.awt.event.MouseEvent;
 public abstract class JavaCodeToTextConverter {
 
     /**
+     * Private Constructor
+     */
+    private JavaCodeToTextConverter() {
+    }
+
+    /**
      * Get the name for a mouse button code
      *
      * @param buttonCode the button code
@@ -16,14 +23,15 @@ public abstract class JavaCodeToTextConverter {
      */
     public static String getMouseButtonText(int buttonCode) {
         switch (buttonCode) {
-            case MouseEvent.BUTTON1_DOWN_MASK:
+            case InputEvent.BUTTON1_DOWN_MASK:
                 return "LEFT";
-            case MouseEvent.BUTTON2_DOWN_MASK:
+            case InputEvent.BUTTON2_DOWN_MASK:
                 return "CENTER";
-            case MouseEvent.BUTTON3_DOWN_MASK:
+            case InputEvent.BUTTON3_DOWN_MASK:
                 return "RIGHT";
+            default:
+                return "unknown";
         }
-        return "unknown";
     }
 
     /**
