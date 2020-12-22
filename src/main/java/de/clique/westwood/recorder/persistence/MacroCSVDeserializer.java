@@ -11,13 +11,7 @@ import java.util.List;
 /**
  * Deserializer for .macro files
  */
-public abstract class MacroCSVDeserializer {
-
-    /**
-     * Private Constructor
-     */
-    private MacroCSVDeserializer() {
-    }
+public interface MacroCSVDeserializer {
 
     /**
      * Read the recording from file
@@ -26,7 +20,7 @@ public abstract class MacroCSVDeserializer {
      * @return the recording
      * @throws IOException when file reading fails
      */
-    public static List<MouseAndKeyboardEvents> loadFromFile(File input) throws IOException {
+    static List<MouseAndKeyboardEvents> loadFromFile(File input) throws IOException {
         List<MouseAndKeyboardEvents> result = new ArrayList<>();
         String lines = Files.readString(input.toPath());
         for (String line : lines.split("\n")) {

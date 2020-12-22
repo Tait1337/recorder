@@ -2,18 +2,11 @@ package de.clique.westwood.recorder.jnative;
 
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
 
 /**
  * Convert Mouse Button and Keyboard codes to text
  */
-public abstract class JavaCodeToTextConverter {
-
-    /**
-     * Private Constructor
-     */
-    private JavaCodeToTextConverter() {
-    }
+public interface JavaCodeToTextConverter {
 
     /**
      * Get the name for a mouse button code
@@ -21,7 +14,7 @@ public abstract class JavaCodeToTextConverter {
      * @param buttonCode the button code
      * @return the button name
      */
-    public static String getMouseButtonText(int buttonCode) {
+    static String getMouseButtonText(int buttonCode) {
         switch (buttonCode) {
             case InputEvent.BUTTON1_DOWN_MASK:
                 return "LEFT";
@@ -40,7 +33,7 @@ public abstract class JavaCodeToTextConverter {
      * @param keyCode the keycode
      * @return the key name
      */
-    public static String getKeyboardKeyText(int keyCode) {
+    static String getKeyboardKeyText(int keyCode) {
         if (keyCode >= KeyEvent.VK_0 && keyCode <= KeyEvent.VK_9 || keyCode >= KeyEvent.VK_A && keyCode <= KeyEvent.VK_Z) {
             return String.valueOf((char) keyCode);
         }
