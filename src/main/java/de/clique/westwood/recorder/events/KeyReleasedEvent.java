@@ -1,7 +1,5 @@
 package de.clique.westwood.recorder.events;
 
-import de.clique.westwood.recorder.jnative.JavaCodeToTextConverter;
-
 /**
  * Event that represents: keyboard key released
  */
@@ -21,10 +19,6 @@ public class KeyReleasedEvent implements MouseAndKeyboardEvents {
 
     public int getKeyCode() {
         return keycode;
-    }
-
-    public String getKeyText(){
-        return JavaCodeToTextConverter.getKeyboardKeyText(keycode);
     }
 
 }

@@ -1,7 +1,5 @@
 package de.clique.westwood.recorder.events;
 
-import de.clique.westwood.recorder.jnative.JavaCodeToTextConverter;
-
 /**
  * Event that represents: mouse button released
  */
@@ -22,9 +20,4 @@ public class MouseReleasedEvent implements MouseAndKeyboardEvents {
     public long getDelay() {
         return delay;
     }
-
-    public String getButtonText(){
-        return JavaCodeToTextConverter.getMouseButtonText(buttoncode);
-    }
-
 }
