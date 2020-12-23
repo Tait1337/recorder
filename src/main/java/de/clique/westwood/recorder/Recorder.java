@@ -89,7 +89,8 @@ public class Recorder {
         List<MouseAndKeyboardEvents> recording = MacroCSVDeserializer.loadFromFile(source);
         File mp4File = new File(source.getAbsolutePath() + "-playback_" + System.currentTimeMillis() + ".mp4");
         File gifFile = new File(mp4File.getAbsolutePath().substring(0, mp4File.getAbsolutePath().length() - 3) + "gif");
-        if (recordScreenAsMP4 || recordScreenAsGIFSelected) {
+        boolean videoRecording = recordScreenAsMP4 || recordScreenAsGIFSelected;
+        if (videoRecording) {
             FFmpegExecutor.startScreenRecording(mp4File);
         }
 
@@ -118,7 +119,7 @@ public class Recorder {
                 robot.mouseRelease(event.getButtoncode());
             }
         }
-        if (recordScreenAsMP4 || recordScreenAsGIFSelected) {
+        if (videoRecording) {
             FFmpegExecutor.stopScreenRecording();
         }
         if (recordScreenAsGIFSelected) {
