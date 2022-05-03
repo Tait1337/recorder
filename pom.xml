@@ -6,8 +6,8 @@
     <version>1.0.0-SNAPSHOT</version>
 
     <properties>
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
         <sonar.projectKey>Tait1337_recorder</sonar.projectKey>
         <sonar.organization>tait1337</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>

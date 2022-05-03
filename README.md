@@ -19,7 +19,7 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 
-Install Java JDK 11 or higher.
+Install Java JDK 17 or higher.
 ```
 https://openjdk.java.net/install/index.html
 ```
@@ -40,7 +40,7 @@ Check the chapter Configuration for FFmpeg and sound device configurations.
 
 Run the Application.
 ```
-java -Dffmpeg.home="/path/to/ffmpeg/bin" -Dffmpeg.audio.input.device="Stereomix (Realtek High Definition Audio)" -jar ./target/recorder-1.0.0-SNAPSHOT.jar
+java -jar ./target/recorder-1.0.0-SNAPSHOT.jar -Dffmpeg.home="/path/to/ffmpeg/bin" -Dffmpeg.audio.input.device="Stereomix (Realtek High Definition Audio)"
 ```
 
 ![Screenshot](screenshot_ui.png)
