@@ -36,8 +36,8 @@ public class Recorder {
     /**
      * Start a new Recording
      *
-     * @param recordKeyboardAndMouse <code>true</code> to active the recording of keyboard and mouse events
-     * @param recordScreen           <code>true</code> to active screen recording
+     * @param recordKeyboardAndMouse <code>true</code> to activate the recording of keyboard and mouse events
+     * @param recordScreen           <code>true</code> to activate screen recording
      * @param outputFile             the target file to store the recording
      * @throws IOException if the recording could not be saved into filesystem
      * @throws NativeHookException if mouse and keyboard recording hook could not be established
@@ -99,23 +99,18 @@ public class Recorder {
             try {
                 Thread.sleep(genericEvent.getDelay());
             } catch (InterruptedException e) {
-                LOGGER.warning("Thread was interrupted: " + e.toString());
+                LOGGER.warning("Thread was interrupted: " + e);
                 Thread.currentThread().interrupt();
             }
-            if (genericEvent instanceof KeyPressedEvent) {
-                KeyPressedEvent event = (KeyPressedEvent) genericEvent;
+            if (genericEvent instanceof KeyPressedEvent event) {
                 robot.keyPress(event.getKeyCode());
-            } else if (genericEvent instanceof KeyReleasedEvent) {
-                KeyReleasedEvent event = (KeyReleasedEvent) genericEvent;
+            } else if (genericEvent instanceof KeyReleasedEvent event) {
                 robot.keyRelease(event.getKeyCode());
-            } else if (genericEvent instanceof MouseMovedEvent) {
-                MouseMovedEvent event = (MouseMovedEvent) genericEvent;
+            } else if (genericEvent instanceof MouseMovedEvent event) {
                 robot.mouseMove(event.getX(), event.getY());
-            } else if (genericEvent instanceof MousePressedEvent) {
-                MousePressedEvent event = (MousePressedEvent) genericEvent;
+            } else if (genericEvent instanceof MousePressedEvent event) {
                 robot.mousePress(event.getButtoncode());
-            } else if (genericEvent instanceof MouseReleasedEvent) {
-                MouseReleasedEvent event = (MouseReleasedEvent) genericEvent;
+            } else if (genericEvent instanceof MouseReleasedEvent event) {
                 robot.mouseRelease(event.getButtoncode());
             }
         }

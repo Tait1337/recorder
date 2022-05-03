@@ -37,20 +37,15 @@ public abstract class MacroCSVSerializer {
                 String line = "";
                 line += genericEvent.getClass().getName() + ";";
                 line += genericEvent.getDelay() + ";";
-                if (genericEvent instanceof KeyPressedEvent) {
-                    KeyPressedEvent event = (KeyPressedEvent) genericEvent;
+                if (genericEvent instanceof KeyPressedEvent event) {
                     line += event.getKeyCode() + ";";
-                } else if (genericEvent instanceof KeyReleasedEvent) {
-                    KeyReleasedEvent event = (KeyReleasedEvent) genericEvent;
+                } else if (genericEvent instanceof KeyReleasedEvent event) {
                     line += event.getKeyCode() + ";";
-                } else if (genericEvent instanceof MouseMovedEvent) {
-                    MouseMovedEvent event = (MouseMovedEvent) genericEvent;
+                } else if (genericEvent instanceof MouseMovedEvent event) {
                     line += event.getX() + ";" + event.getY() + ";";
-                } else if (genericEvent instanceof MousePressedEvent) {
-                    MousePressedEvent event = (MousePressedEvent) genericEvent;
+                } else if (genericEvent instanceof MousePressedEvent event) {
                     line += event.getButtoncode() + ";";
-                } else if (genericEvent instanceof MouseReleasedEvent) {
-                    MouseReleasedEvent event = (MouseReleasedEvent) genericEvent;
+                } else if (genericEvent instanceof MouseReleasedEvent event) {
                     line += event.getButtoncode() + ";";
                 }
                 line += "\n";
